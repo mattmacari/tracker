@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+
+  web:
+    build: ./web/
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./web:/code
+    # start the project
+    # command: django-admin startproject mysite .
+    command: python manage.py runserver 0.0.0.0:8000
