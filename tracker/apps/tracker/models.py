@@ -2,15 +2,15 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-
 # #######################################
 # Weight Tracker Models
 # #######################################
 
+
 class Weight(models.Model):
 
-    id  = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey(to=User, on_delete='cascade')
+    id = models.BigAutoField(primary_key=True)
+    user = models.ForeignKey(to=User, on_delete="cascade")
     measured_date = models.DateTimeField(auto_now_add=True)
     weight = models.FloatField()
     scale_calc_body_fat = models.FloatField()
@@ -20,4 +20,4 @@ class Weight(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = 'Weight'
+        verbose_name = "Weight"

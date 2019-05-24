@@ -8,25 +8,24 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-    ]
+    dependencies = [migrations.swappable_dependency(settings.AUTH_USER_MODEL)]
 
     operations = [
         migrations.CreateModel(
-            name='Weight',
+            name="Weight",
             fields=[
-                ('id', models.BigAutoField(primary_key=True, serialize=False)),
-                ('measured_date', models.DateTimeField(auto_now_add=True)),
-                ('weight', models.FloatField()),
-                ('scale_calc_body_fat', models.FloatField()),
-                ('scale_calc_lbm', models.FloatField()),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('user', models.ForeignKey(on_delete='cascade', to=settings.AUTH_USER_MODEL)),
+                ("id", models.BigAutoField(primary_key=True, serialize=False)),
+                ("measured_date", models.DateTimeField(auto_now_add=True)),
+                ("weight", models.FloatField()),
+                ("scale_calc_body_fat", models.FloatField()),
+                ("scale_calc_lbm", models.FloatField()),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                (
+                    "user",
+                    models.ForeignKey(on_delete="cascade", to=settings.AUTH_USER_MODEL),
+                ),
             ],
-            options={
-                'verbose_name': 'Weight',
-            },
-        ),
+            options={"verbose_name": "Weight"},
+        )
     ]
