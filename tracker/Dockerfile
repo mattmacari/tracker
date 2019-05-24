@@ -1,4 +1,4 @@
-FROM python:3.6
+FROM python:3.7
 
 ## Ensure that Python outputs everything that's prinsted inside the application
 # rather than buffering it.
