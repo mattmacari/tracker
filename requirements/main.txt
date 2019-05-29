@@ -1,5 +1,7 @@
 -i https://pypi.org/simple
+django-filter==2.1.0
 django==2.1.8
 djangorestframework==3.9.4
+markdown==3.1.1
 psycopg2-binary==2.8.2
 pytz==2019.1
