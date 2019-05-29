@@ -14,14 +14,20 @@ services:
       timeout: 5s
       retries: 10
   web:
+    image: web
     build: .
-    command: python manage.py runserver $BIND_TO_HOST:$WEB_PORT
+    command: python manage.py migrate
     ports:
       - $WEB_PORT:$WEB_PORT
     volumes:
-      - ./tracker:/code
+      - .:/app
     depends_on:
       - db
+    env_file: .env
 
 volumes:
   postgres_data:
+
+# to enter a docker container 
+# docker ps
+# docker exec -t -i <container_id> bash

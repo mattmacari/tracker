@@ -10,11 +10,11 @@ RUN mkdir /code
 WORKDIR /code
 
 # Add requirements to container
-ADD requirements.txt /code/
+ADD requirements/main.txt /code/
 
 # Install requirements
 RUN pip install --upgrade pip
-RUN pip install -r /code/requirements.txt
+RUN pip install -r /code/main.txt
 
 # Add current directory to Docker container
-ADD . /code/
+ADD ./tracker /code/
