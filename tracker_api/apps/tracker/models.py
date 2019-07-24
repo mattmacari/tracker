@@ -11,7 +11,7 @@ class Weight(models.Model):
 
     id = models.BigAutoField(primary_key=True)
     user = models.ForeignKey(to=User, on_delete="cascade")
-    measured_date = models.DateTimeField(auto_now_add=True)
+    measured_date = models.DateTimeField()
     weight = models.FloatField()
     scale_calc_body_fat = models.FloatField()
     scale_calc_lbm = models.FloatField()

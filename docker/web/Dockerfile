@@ -1,16 +1,21 @@
 # base image
-FROM node:12.2.0-alpine
+FROM node:lts-alpine
+
+# update npm & install vue cli peer dependencies
+RUN npm install -g http-server npm 
+RUN npm install -g @vue/cli @vue/cli-service @vue/cli-plugin-babel @vue/cli-plugin-eslint
 
 # set working directory
 WORKDIR /app
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
-
 # install and cache app dependencies
-COPY package.json /app/package.json
+COPY client/package*.json ./
 RUN npm install
-RUN npm install @vue/cli@3.7.0 -g
 
+COPY ./client /app
+
+RUN npm run build
+
+EXPOSE 8080
 # start app
-CMD ["npm", "run", "serve"]
+CMD ["http-server", "dist"]
