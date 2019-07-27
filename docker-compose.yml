@@ -14,33 +14,19 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
-  api:
-    container_name: api
+  web:
+    container_name: web
     build:
       context: .
-      dockerfile: ./docker/api/Dockerfile
+      dockerfile: Dockerfile
     command: python manage.py runserver $BIND_TO_HOST:$WEB_PORT
     ports:
       - $WEB_PORT:$WEB_PORT
     volumes:
-      - ./tracker_api:/code
+      - ./tracker:/code
     depends_on:
       - db
     env_file: .env
-  # web:
-  #   container_name: tracker-web
-  #   image: docker-vue
-  #   build:
-  #     context: .
-  #     dockerfile: ./docker/web/Dockerfile
-  #   volumes:
-  #     - ./client:/app
-  #     - /app/node_modules
-  #   ports:
-  #     - '8080:8080'
-  #   environment:
-  #     - CHOKIDAR_USEPOLLING=true
-  #     - npm_config_unsafe_perm=true
 
 
 volumes:

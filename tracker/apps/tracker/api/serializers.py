@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
-from . import models
+from .. import models
 
 
 class WeightSerializer(serializers.ModelSerializer):

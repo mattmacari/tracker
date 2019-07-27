@@ -2,7 +2,8 @@ from django.contrib.auth.models import User
 from rest_framework import generics, viewsets
 from rest_framework.permissions import IsAuthenticated
 
-from . import models, serializers
+from . import serializers
+from .. import models
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):

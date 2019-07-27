@@ -1,0 +1,114 @@
+<!-- templates/weifght_form.html -->
+{% extends 'tracker/base.html' %}
+
+{% block title %}Weight Form{% endblock %}
+
+{% block child_content%}
+<div class="modal is-active">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">{% if weight.pk %}Update Weight{% else %}Log Weight{% endif %}</p>
+        <a class="button is-delete" href="{% url 'list_weight' %}">Cancel</a>
+      </header>
+    <div class="modal-card-body">
+        <div class="container is-fluid">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="tile box">
+                    <div class="form">
+                        {% if form.errors %}
+                        {% for field in form %}
+                        {% for error in field.errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{field}} - {{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        <!--Measured On-->
+                        <div class="field">
+                            <label class="label" id="{{ form.measured_date.id_label }}">Measured On:</label>
+                            {% if not weight.pk %}
+                            <p class="control">
+                                <input class="input is-rounded" type="datetime" name="measured_date"
+                                    id="{{ form.measured_date.auto_id }}" value="{{ form.measured_date.value }}"
+                                    required />
+                            </p>
+                            {% else %}
+                            <input class="input is-rounded" id="{{ form.measured_date.auto_id }}" name="measured_date"
+                                value="{{ form.measured_date.value }}" />
+                            {% endif %}
+                        </div>
+                        <!-- Weight -->
+                        <div class="field">
+                            <label class="label" id="{{ form.weight.id_label }}">Weight</label>
+                            <p class="control">
+                                <input class="input is-rounded" type="number" name="weight"
+                                    id="{{ form.weight.auto_id }}" value="{{ form.weight.value }}">
+                            </p>
+                        </div>
+                        <!-- Body Fat -->
+                        <div class="field">
+                            <label class="label" id="{{ form.scale_calc_body_fat.id_label }}">Body Fat</label>
+                            <p class="control">
+                                <input class="input is-rounded" type="number" min="0" max="1" step="any"
+                                    name="scale_calc_body_fat" id="{{ form.scale_calc_body_fat.auto_id }}"
+                                    value="{{ form.scale_calc_body_fat.value }}">
+                            </p>
+                        </div>
+                        <!-- LBM -->
+                        <div class="field">
+                            <label class="label" id="{{ form.scale_calc_lbm.id_label }}">Lean Body Mass (LBM)</label>
+                            <p class="control">
+                                <input class="input is-rounded" type="number" min="0" max="1" step="any"
+                                    name="scale_calc_lbm" id="{{ form.scale_calc_lbm.auto_id }}"
+                                    value="{{ form.scale_calc_lbm.value }}">
+                            </p>
+                        </div>
+                        <div class="control">
+                            <button class="button is-primary" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_script %}
+<script>
+    var options = {
+        "isRange": false,
+        "displayMode": "dialog",
+        "dateFormat": "YYYY-MM-DD",
+        "timeFormat": "HH:mm"
+    }
+    // Initialize all input of type date
+    var calendars = bulmaCalendar.attach('[type="datetime"]', options);
+
+    // Loop on each calendar initialized
+    for (var i = 0; i < calendars.length; i++) {
+        // Add listener to date:selected event
+        calendars[i].on('select', date => {
+            console.log(date);
+        });
+    }
+
+
+    // To access to bulmaCalendar instance of an element
+    var element = document.querySelector('#{{ form.measured_date.auto_id }}');
+    if (element) {
+        // bulmaCalendar instance is available as element.bulmaCalendar
+        element.bulmaCalendar.on('select', function (datepicker) {
+            console.log(datepicker.data.value());
+        });
+    }
+</script>
+{% endblock %}

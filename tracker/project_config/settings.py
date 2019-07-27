@@ -40,9 +40,9 @@ BUILTIN_APPS = [
     "django.contrib.staticfiles",
 ]
 
-THIRD_PARTY_APPS = ["rest_framework", "rest_framework.authtoken", "corsheaders"]
+THIRD_PARTY_APPS = ["rest_framework", "rest_framework.authtoken", "corsheaders", "taggit"]
 
-LOCAL_APPS = ["project_config", "apps.tracker"]
+LOCAL_APPS = ["project_config", "apps.tracker", "apps.planner"]
 
 INSTALLED_APPS = BUILTIN_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
