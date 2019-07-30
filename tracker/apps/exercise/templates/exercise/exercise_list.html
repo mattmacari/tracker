@@ -1,0 +1,51 @@
+<!-- templates/exercise/exercise_list.html --> 
+{% extends "exercise/base.html" %}
+
+
+{% block title %}Exercises{% endblock %}
+
+{% block child_content %}
+<nav class="level">
+    <div class="level-item level-left">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+              <li><a href="{% url 'exercise_index'%}">Exercise</a></li>
+              <li class="is-active"><a href="#" aria-current="page">Manage</a></li>
+              <li class="is-active"><a href="#" aria-current="page">Exercises</a></li>
+            </ul>
+          </nav>
+    </div>
+    <div class="level-item level-right">
+        <a class="button is-primary" href="{% url 'create_exercise' %}">
+            <span class="icon is-small">
+                <i class="fas fa-plus"></i>
+            </span>
+            <span>Add</span>
+        </a>
+    </div>
+</nav>
+
+{% if exercise_list %}
+<h3>Exercises</h3>
+<table class="table is-striped is-fullwidth">
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Muscle</th>
+        <th>Difficulty</th>
+        <th>Equipment</th>
+        <th></th>
+    </tr>
+    {% for exercise in exercise_list %}
+    <tr>
+        <td>{{exercise.name}}</td>
+        <td>{{exercise.get_type_display}}</td>
+        <td>{{exercise.muscle }}</td>
+        <td>{{exercise.get_difficulty_level_display}}</td>
+        <td>{{exercise.exercise_equipment }}</td>
+        <td><a href="{% url 'update_exercise' exercise.pk%}">edit</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif%}
+{% endblock %}

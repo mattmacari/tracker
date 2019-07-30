@@ -1,0 +1,131 @@
+<!-- templates/exercise/exercise_form.html -->
+{% extends "exercise/base.html" %}
+
+{% block title %}Manage Exercise{% endblock %}
+
+{% block child_content%}
+<div class="container is-fluid">
+    <div class="modal is-active modal-fx-fadeInScale">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <header class="modal-card-head">
+                <p class="modal-card-title">{% if exercise.pk %}Update Exercise {% else %} Create Exercise {% endif %}
+                </p>
+                <a class="button is-delete" href="{% url 'list_exercises' %}">Cancel</a>
+            </header>
+            <div class="modal-card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form">
+                        {% if form.errors %}
+                        {% for field in form %}
+                        {% for error in field.errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{field}} - {{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+
+                        <div class="columns">
+                            <div class="column">
+                                <div class="columns">
+                                    <!--Group into one row-->
+                                    <!--Name -->
+                                    <div class="column field">
+                                        <label class="label" id="{{ form.name.id_label }}">Exercise Name</label>
+                                        <input type="text" class="input is-rounded" id="{{ form.name.auto_id }}"
+                                            name="name" {% if form.name.value %} value="{{ form.name.value }}"
+                                            {% endif %} />
+                                    </div>
+                                    <!--Muscle -->
+                                    <div class="column field">
+                                        <label class="label" id="{{ form.muscle.id_label }}">Muscle</label>
+                                        <div class="select is-rounded" data-title="Select muscle">
+                                            {{ form.muscle }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="columns">
+                                    <!-- exercise equipment-->
+                                    <div class="column">
+                                        <label class="label"
+                                            id="{{ form.exercise_equipment.id_label }}">Equipment</label>
+                                        <div class="select is-rounded" data-title="Select muscle">
+                                            {{ form.exercise_equipment }}
+                                        </div>
+                                    </div>
+                                    <!-- Tags -->
+                                    <div class="column field">
+                                        <label class="label" id="{{ form.tags.id_label }}">Workout Tags:</label>
+                                        <input type="tags" class="input is-rounded" id="{{ form.tags.auto_id }}"
+                                            name="tags" {% if form.tags.value %} value="{{ tags }}" {% endif %} />
+                                    </div>
+                                </div>
+                                <div class="columns">
+                                        <!-- Difficulty Level -->
+                                        <div class="column field">
+                                            <label class="label" id="{{ form.difficulty_level.id_label }}">Difficulty
+                                                Level</label>
+                                            <div class="select is-rounded" data-title="Select Difficulty level">
+                                                {{ form.difficulty_level }}
+                                            </div>
+                                        </div>
+                                        <!-- Exercise Type -->
+                                        <div class="column field">
+                                            <label class="label" id="{{ form.type.id_label }}">Type</label>
+                                            <div class="select is-rounded" data-title="Select type">
+                                                {{ form.type }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="columns">
+                                        <div class="column field">
+                                            <label class="label" id="{{ form.image_url.id_label }}">Image URL</label>
+                                            <input type="url" class="input is-rounded" id="{{ form.image_url.auto_id }}"
+                                                name="image_url" {% if form.image_url.value %} value="{{ form.image_url.value }}"
+                                                {% endif %} />
+                                        </div>
+                                        <div class="column field">
+                                                <label class="label" id="{{ form.video_url.id_label }}">Video URL</label>
+                                                <input type="url" class="input is-rounded" id="{{ form.video_url.auto_id }}"
+                                                name="video_url" {% if form.video_url.value %} value="{{ form.video_url.value }}"
+                                                {% endif %} />
+                                            </div>
+                                    </div>
+                                <div class="columns">
+                                    <!-- Description -->
+                                    <div class="column field">
+                                        <label class="label" id="{{ form.description.id_label }}">Description</label>
+                                        <p class="control">
+                                            <textarea class="textarea is-rounded as-fixed-size" type="textbox"
+                                                name="description" id="{{ form.description.auto_id }}"></textarea>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Submit button-->
+                        <div class="control">
+                            <button class="button is-primary" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}
+
+    {% block extra_script%}
+    <script>
+        bulmaTagsinput.attach();
+    </script>
+    {% endblock %}

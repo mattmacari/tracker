@@ -9,5 +9,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("django.contrib.auth.urls")),
     path("tracker/", include("apps.tracker.urls")),
+    path("exercise/", include("apps.exercise.urls")),
     path("", views.index, name="home"),
 ]
