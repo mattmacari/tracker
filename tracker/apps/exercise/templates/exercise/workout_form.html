@@ -1,0 +1,98 @@
+<!-- templates/exercise/workout_Form.html -->
+{% extends "exercise/base.html" %}
+
+{% block title %}Manage Workout{% endblock %}
+
+{% block child_content%}
+<div class="container is-fluid">
+    <div class="modal is-active">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">{% if workout.pk %}Update Workout {% else %} Create Workout {% endif %}</p>
+                <a class="button is-delete" href="{% url 'list_workouts' %}">Cancel</a>
+            </header>
+            <div class="modal-card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form">
+                        {% if form.errors %}
+                        {% for field in form %}
+                        {% for error in field.errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{field}} - {{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        <!--Name -->
+                        <div class="field">
+                            <label class="label" id="{{ form.name.id_label }}">Workout Name:</label>
+                            <input type="text" class="input is-rounded" id="{{ form.name.auto_id }}" name="name"
+                                {% if form.name.value %} value="{{ form.name.value }}" {% endif %} />
+                        </div>
+                        <!-- Difficulty Level -->
+                        <div class="field">
+                            <label class="label" id="{{ form.difficulty_level.id_label }}">Difficulty Level</label>
+                            <div class="select is-rounded" data-title="Select Difficulty level">
+                                <select id="{{ form.difficulty_level.auto_id }}" name="difficulty_level">
+                                    {% for x,y in form.fields.difficulty_level.choices %}
+                                    <option value="{{ x }}" {% if form.fields.difficulty_level.value == x %}
+                                        selected{% endif %}>{{ y }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Workout Type -->
+                        <div class="field">
+                            <label class="label" id="{{ form.type.id_label }}">Workout Type</label>
+                            <div class="select is-rounded" data-title="Select Difficulty level">
+                                <select id="{{ form.type.auto_id }}" name="type">
+                                    {% for x,y in form.fields.type.choices %}
+                                    <option value="{{ x }}" {% if form.fields.type.value == x %} selected{% endif %}>
+                                        {{ y }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Description -->
+                        <div class="field">
+                            <label class="label" id="{{ form.description.id_label }}">Description</label>
+                            <p class="control">
+                                <textarea class="textarea is-rounded as-fixed-size" type="textbox" name="description"
+                                    id="{{ form.description.auto_id }}"></textarea>
+                            </p>
+                        </div>
+                        <!-- Public? -->
+                        <div class="field">
+                            <label class="checkbox" id="{{ form.is_public.id_label }}">Make Public?</label>
+                            {{form.is_public}}
+                        </div>
+
+                        <!-- Tags -->
+                        <div class="field">
+                            <label class="label" id="{{ form.tags.id_label }}">Workout Tags:</label>
+                            <input type="tags" class="input is-rounded" id="{{ form.tags.auto_id }}" name="tags"
+                                {% if form.tags.value %} value="{{ tags }}" {% endif %} placeholder="Add tags" />
+                        </div>
+                        <!-- Submit button-->
+                        <div class="control">
+                            <button class="button is-primary" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    {% block extra_script%}
+    <script>
+        bulmaTagsinput.attach();
+    </script>
+    {% endblock %}

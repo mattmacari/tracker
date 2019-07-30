@@ -6,23 +6,28 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <!-- Bootstrap CSS -->
+  <!-- Bulma CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css"
-    integrity="sha256-vK3UTo/8wHbaUn+dTQD0X6dzidqc5l7gczvH+Bnowwk=" crossorigin="anonymous" />
+  integrity="sha256-vK3UTo/8wHbaUn+dTQD0X6dzidqc5l7gczvH+Bnowwk=" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
     integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI=" crossorigin="anonymous" />
   <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/bulma-calendar/dist/css/bulma-calendar.min.css"
     integrity="sha256-myY+sWOl5EOPTrGbyIgyF81AV2Te+eAFQKG1PSBX6jA=" crossorigin="anonymous">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/bulma-tagsinput/dist/css/bulma-tagsinput.min.css"
+    integrity="sha256-jR3iRhnAXd+QRWOLUgWatJLUiHznQRnu1UXWavhZ2ok=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-modal-fx@1.1.1/dist/css/modal-fx.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulmaswatch@0.7.2/flatly/bulmaswatch.min.css" integrity="sha256-WSV/AhhnY7hEn4OFZQmcnWNMukaNH5WHlFayl/FgOcE=" crossorigin="anonymous">
 
   <title>{% block title %} Default Tracker Title {% endblock %}</title>
 </head>
 
 <body class="has-spaced-navbar-fixed-top">
 
-  <nav class="navbar is-fixed-top is-light is-bold" role="navigation" aria-label="main navigation">
+  <nav class="navbar navbar-menu is-fixed-top" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <h1 class="title">Health Tracker</h1>
+      <div class="navbar-item">Health Tracker</div>
       <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
         data-target="navbarBasicExample">
         <span aria-hidden="true"></span>
@@ -36,16 +41,13 @@
         <a class="navbar-item" href="{% url 'home' %}">Dashboard</a>
 
         <a class="navbar-item" href="{% url 'tracker_index' %}">Tracker</a>
+        <a class="navbar-item" href="{% url 'exercise_index' %}">Exercise</a>
+        <a class="navbar-item" href="{% url 'home' %}">Nutrition</a>
       </div>
-    </div>
-    {% else %}
     {% endif %}
     <div class="navbar-end">
-      <div class="navbar-group">
-        {% if user.is_authenticated %}
-        <a href="{% url 'logout' %}" class="button is-warning">Logout</a>
+        <a href="{% url 'logout' %}" class="navbar-item">Logout</a>
       </div>
-      {% else %} <a href="{% url 'login' %}" class="button is-info">Login</a> {% endif %}
     </div>
     </div>
     </div>
@@ -69,6 +71,9 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
   </script>
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/bulma-tagsinput/dist/js/bulma-tagsinput.min.js"
+    integrity="sha256-s1WqlOxRnjdNft9Wnj296LvjD/Ohk8uW8pMO54FZOdY=" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bulma-modal-fx@1.1.1/dist/js/modal-fx.min.js"></script>
   {% block extra_script %}
 
   {% endblock %}

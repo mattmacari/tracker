@@ -42,7 +42,7 @@ BUILTIN_APPS = [
 
 THIRD_PARTY_APPS = ["rest_framework", "rest_framework.authtoken", "corsheaders", "taggit"]
 
-LOCAL_APPS = ["project_config", "apps.tracker", "apps.planner"]
+LOCAL_APPS = ["project_config", "apps.exercise", "apps.nutrition", "apps.planner", "apps.tracker"]
 
 INSTALLED_APPS = BUILTIN_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -54,6 +54,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # middleware to reguire login
+    "project_config.middleware.RequireLoginMiddleware"
 ]
 
 ROOT_URLCONF = "project_config.urls"
@@ -92,8 +94,20 @@ DATABASES = {
 }
 
 
+# Authentication 
+
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
+
+# Login Required Middleware config (middlware.RequireLoginMiddleware)
+LOGIN_REQUIRED_URLS = (
+    r'(.*)',
+)
+LOGIN_REQUIRED_URLS_EXCEPTIONS = (
+    r'/admin(.*)$',
+    r'/accounts/login'
+)
+LOGIN_URL = '/accounts/login'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -103,6 +117,12 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
+
+
+# Login/Logout Links
+
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
 
 # Internationalization
@@ -124,11 +144,6 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
-
-# Login/Logout Links
-
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
 
 # django_rest_framework configuration
 REST_FRAMEWORK = {
