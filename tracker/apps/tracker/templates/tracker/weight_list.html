@@ -1,0 +1,91 @@
+<!-- templates/weifght_list.html -->
+{% extends 'tracker/base.html' %}
+
+{% block title %}Weight Tracker{% endblock %}
+
+{% block child_content %}
+<nav class="level">
+    <div class="level-item level-left">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+              <li><a href="{% url 'tracker_index'%}">Tracking</a></li>
+              <li class="is-active"><a href="#" aria-current="page">Weight</a></li>
+            </ul>
+          </nav>
+    </div>
+    <div class="level-item level-right">
+        <a class="button is-primary" href="{% url 'create_weight' %}">
+            <span class="icon is-small">
+                <i class="fas fa-plus"></i>
+            </span>
+            <span>Add</span>
+        </a>
+    </div>
+</nav>
+{% if weight_list %}
+<div class="tile box">
+    <div id="weight-graph"></div>
+</div>
+<table class="table is-striped">
+    <tr>
+        <th>Measured Date</th>
+        <th>Weight</th>
+        <th>Scale Bodyfat</th>
+        <th>Scale LBM</th>
+        <th></th>
+    </tr>
+    {% for weight in weight_list%}
+    <tr>
+        <td>{{weight.measured_date|date}}</td>
+        <td>{{weight.weight}}</td>
+        <td>{{weight.scale_calc_body_fat}}</td>
+        <td>{{weight.scale_calc_lbm}}</td>
+        <td><a href="{% url 'update_weight' weight.pk%}">edit</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif%}
+
+{% endblock %}
+
+{% block extra_script %}
+<script>
+    var data = [{
+        x: {{ plot_dates| safe}},
+        y: {{ plot_weights | safe }},
+    type: 'scatter'
+    }];
+
+    var layout = {
+        title: 'Weight Trend',
+        showlegend: false,
+        xaxis: {
+            autorange: true,
+            rangeselector: {buttons: [
+                {
+                  count: 1,
+                  label: '1m',
+                  step: 'month',
+                  stepmode: 'backward'
+                },
+                {
+                  count: 6,
+                  label: '6m',
+                  step: 'month',
+                  stepmode: 'backward'
+                },
+                {
+                  count: 12,
+                  label: '12m',
+                  step: 'month',
+                  stepmode: 'backward'
+                },
+                {step: 'all'}
+              ]},
+            type: 'date'
+          },
+    };
+
+    Plotly.newPlot('weight-graph', data, layout, { staticPlot: true });
+</script>
+{% endblock %}

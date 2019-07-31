@@ -1,32 +1,82 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>{% block title %} Default Tracker Title {% endblock %}</title>
-  </head>
-  <body>
+  <!-- Bulma CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css"
+  integrity="sha256-vK3UTo/8wHbaUn+dTQD0X6dzidqc5l7gczvH+Bnowwk=" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"
+    integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI=" crossorigin="anonymous" />
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/bulma-calendar/dist/css/bulma-calendar.min.css"
+    integrity="sha256-myY+sWOl5EOPTrGbyIgyF81AV2Te+eAFQKG1PSBX6jA=" crossorigin="anonymous">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/bulma-tagsinput/dist/css/bulma-tagsinput.min.css"
+    integrity="sha256-jR3iRhnAXd+QRWOLUgWatJLUiHznQRnu1UXWavhZ2ok=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-modal-fx@1.1.1/dist/css/modal-fx.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulmaswatch@0.7.2/flatly/bulmaswatch.min.css" integrity="sha256-WSV/AhhnY7hEn4OFZQmcnWNMukaNH5WHlFayl/FgOcE=" crossorigin="anonymous">
 
-      <nav class="navbar navbar-light bg-light">
-          <span class="navbar-brand mb-0 h1">Health Tracker</span>
+  <title>{% block title %} Default Tracker Title {% endblock %}</title>
+</head>
 
-          <ul class="navbar-nan ml-auto">
-            {% if user.is_authenticated %} {{ user.get_username }} | <a href="{% url 'logout' %}">Logout</a> {% else %} <a href="{% url 'login' %}">Login</a> {% endif %}
-          </ul>
-        </nav>
-        <main>
-            {% block content %}
-            {% endblock %}
-        </main>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
+<body class="has-spaced-navbar-fixed-top">
+
+  <nav class="navbar navbar-menu is-fixed-top" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <div class="navbar-item">Health Tracker</div>
+      <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+        data-target="navbarBasicExample">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    {% if user.is_authenticated %}
+    <div class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item" href="{% url 'home' %}">Dashboard</a>
+
+        <a class="navbar-item" href="{% url 'tracker_index' %}">Tracker</a>
+        <a class="navbar-item" href="{% url 'exercise_index' %}">Exercise</a>
+        <a class="navbar-item" href="{% url 'home' %}">Nutrition</a>
+      </div>
+    {% endif %}
+    <div class="navbar-end">
+        <a href="{% url 'logout' %}" class="navbar-item">Logout</a>
+      </div>
+    </div>
+    </div>
+    </div>
+  </nav>
+
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/dist/js/bulma-extensions.min.js"
+    integrity="sha256-q4zsxO0fpPm6VhtL/9QkCFE5ZkNa0yeUxhmt1VO1ev0=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/bulma-calendar/dist/js/bulma-calendar.min.js"
+    integrity="sha256-vsGqFlEv8Y2A93H1Z3pWoVUlGCchOlS8zFH73tC/hc0=" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+  </script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bulma-extensions@6.2.7/bulma-tagsinput/dist/js/bulma-tagsinput.min.js"
+    integrity="sha256-s1WqlOxRnjdNft9Wnj296LvjD/Ohk8uW8pMO54FZOdY=" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bulma-modal-fx@1.1.1/dist/js/modal-fx.min.js"></script>
+  {% block extra_script %}
+
+  {% endblock %}
+</body>
+
 </html>

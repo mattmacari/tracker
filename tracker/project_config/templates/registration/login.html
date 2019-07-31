@@ -4,10 +4,47 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<h2>Login</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Login</button>
-</form>
+<div class="tile is-ancestor">
+  <div class="tile is-child is-4"></div>
+  <div class="tile is-child is-vertical is-4">
+    <p class="title">Login</p>
+    {% if form.subject.errors %}
+    <ol>
+      {% for error in form.subject.errors %}
+      <li><strong>{{ error|escape }}</strong></li>
+      {% endfor %}
+    </ol>
+    {% endif %}
+    <form method="post">
+      {% csrf_token %}
+      <div class="field">
+        <p class="control has-icons-left has-icons-right">
+          <input class="input" type="email" placeholder="Username" name="username" id="{{ form.username.auto_id}}">
+          <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+          </span>
+          <span class="icon is-small is-right">
+            <i class="fas fa-check"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control has-icons-left">
+          <input class="input" type="password" placeholder="Password" name="password" id="{{ form.password.auto_id}}">
+          <span class="icon is-small is-left">
+            <i class="fas fa-lock"></i>
+          </span>
+        </p>
+      </div>
+      <div class="field">
+        <p class="control">
+          <button type="submit" class="button is-success">
+            Login
+          </button>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
+
 {% endblock %}

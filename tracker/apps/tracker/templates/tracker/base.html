@@ -1,0 +1,33 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+
+{% block title %}Tracker{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="tile is-ancestor">
+        <div class="tile is-vertical is-2">
+            <aside class="menu">
+                <p class="menu-label">
+                    General
+                </p>
+                <ul class="menu-list">
+                    <li><a href="{% url 'tracker_index' %}">Dashboard</a></li>
+                </ul>
+                <p class="menu-label">
+                    Tracking
+                </p>
+                <ul class="menu-list">
+                    <li><a href="{% url 'list_weight' %}">Weight</a></li>
+                    <li><a>Workout</a></li>
+                </ul>
+            </aside>
+        </div>
+        <div class="tile is-vertical is-10">
+            {% block child_content%}
+            {% endblock %}
+        </div>
+
+    </div>
+</div>
+{% endblock %}

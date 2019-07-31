@@ -2,7 +2,6 @@ version: "3.7"
 
 services:
   db:
-    container_name: db
     image: postgres:11.3
     volumes:
       - postgres_data:/var/lib/postgresql/data/
@@ -15,19 +14,20 @@ services:
       timeout: 5s
       retries: 10
   web:
-    container_name: web
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: python manage.py runserver $BIND_TO_HOST:$WEB_PORT
+    image: web
+    build: .
+    command: python manage.py migrate
     ports:
       - $WEB_PORT:$WEB_PORT
     volumes:
-      - ./tracker:/code
+      - .:/app
     depends_on:
       - db
     env_file: .env
 
-
 volumes:
   postgres_data:
+
+# to enter a docker container 
+# docker ps
+# docker exec -t -i <container_id> bash
