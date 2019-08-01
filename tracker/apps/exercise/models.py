@@ -40,7 +40,7 @@ class WorkoutManager(models.Manager):
 class Workout(models.Model):
 
     id = models.BigAutoField(primary_key=True)
-    user = models.ForeignKey(to=User, on_delete="cascade", db_index=True)
+    user = models.ForeignKey(to=User, on_delete="cascade", db_index=True, related_name='user_workouts')
     type = models.CharField(
         max_length=250,
         choices=TYPE_CHOICES,
@@ -57,7 +57,7 @@ class Workout(models.Model):
     name = models.TextField()
     description = models.TextField(null=True, blank=True)
 
-    tags = TaggableManager(blank=True)
+    tags = TaggableManager(blank=True, related_name='workout_tags')
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
