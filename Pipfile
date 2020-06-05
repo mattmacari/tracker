@@ -11,7 +11,7 @@ pytest = "*"
 [packages]
 psycopg2-binary = "*"
 djangorestframework = "*"
-Django = ">2.1,<2.2"
+Django = ">2.1,<2.3"
 markdown = "*"
 django-filter = "*"
 
